@@ -1,0 +1,12 @@
+{
+  "status": "not_verified",
+  "jurisdiction": "Uttar Pradesh state DISCOMs under UPERC",
+  "utility_family": "UPPCL",
+  "financial_year": "2026-27",
+  "official_source": "https://www.uppcl.org/uppcl/en/article/tariff-details",
+  "regulator_source": "https://www.uperc.org/Tariff_Order_Users.aspx",
+  "order_date": "2026-07-02",
+  "verification_note": "Official FY 2026-27 state DISCOM order located. The signed rate schedule must be transcribed and independently checked, including effective date, category, area, fixed/demand charge, energy slabs, subsidies, FPPAS, duty, rebates and minimum charges before enabling tariff calculations.",
+  "effective_from": null,
+  "categories": []
+}

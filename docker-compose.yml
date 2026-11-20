@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: clearwatt2
+      POSTGRES_USER: clearwatt
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-only-change-me}
+    volumes: [clearwatt_pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U clearwatt -d clearwatt2"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backend:
+    build: {context: ., dockerfile: Dockerfile.backend}
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg://clearwatt:${POSTGRES_PASSWORD:-local-only-change-me}@db:5432/clearwatt2
+      UPLOAD_DIR: /app/var/uploads
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openai/gpt-4o-mini}
+      CORS_ORIGINS: http://localhost:8080
+    volumes: [clearwatt_uploads:/app/var/uploads]
+    depends_on: {db: {condition: service_healthy}}
+  frontend:
+    build: {context: ., dockerfile: Dockerfile.frontend}
+    ports: ["8080:80"]
+    depends_on: [backend]
+volumes:
+  clearwatt_pgdata:
+  clearwatt_uploads:
